@@ -6,7 +6,11 @@
 
 <title>Drive with Smile | Cab Booking</title>
 
+<!-- QR CODE LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -21,11 +25,11 @@ body{
 
 header{
     background:#111;
-    color:white;
+    color:#fff;
     padding:18px 6%;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 }
 
 .logo{
@@ -37,25 +41,24 @@ header{
     color:#ffc107;
 }
 
-.header-btn{
+.nav-btn{
     background:#ffc107;
     color:#111;
     padding:10px 18px;
     border-radius:25px;
-    text-decoration:none;
     font-weight:bold;
     cursor:pointer;
 }
 
 .hero{
     background:linear-gradient(135deg,#111,#292929);
-    color:white;
-    padding:50px 20px 85px;
+    color:#fff;
     text-align:center;
+    padding:55px 20px 90px;
 }
 
 .hero h1{
-    font-size:42px;
+    font-size:43px;
     margin-bottom:12px;
 }
 
@@ -70,21 +73,20 @@ header{
 
 .booking-card{
     width:92%;
-    max-width:680px;
-    margin:-45px auto 35px;
-    background:white;
+    max-width:700px;
+    margin:-50px auto 35px;
+    background:#fff;
     border-radius:20px;
-    padding:25px;
+    padding:28px;
     box-shadow:0 10px 35px rgba(0,0,0,.15);
-    position:relative;
 }
 
 .booking-card h2{
-    margin-bottom:20px;
+    margin-bottom:22px;
 }
 
 .input-group{
-    margin-bottom:16px;
+    margin-bottom:17px;
 }
 
 .input-group label{
@@ -100,8 +102,8 @@ header{
     padding:14px;
     border:1px solid #ddd;
     border-radius:10px;
-    font-size:15px;
     outline:none;
+    font-size:15px;
 }
 
 .input-group input:focus,
@@ -119,10 +121,9 @@ header{
     background:#fff8df;
     padding:15px;
     border-radius:12px;
-    margin:20px 0;
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    margin:20px 0;
 }
 
 .rate-box strong{
@@ -131,96 +132,141 @@ header{
 
 .fare-box{
     background:#111;
-    color:white;
-    border-radius:15px;
+    color:#fff;
     padding:20px;
+    border-radius:15px;
     text-align:center;
-    margin-top:20px;
-}
-
-.fare-box small{
-    color:#aaa;
 }
 
 .fare{
-    font-size:36px;
-    font-weight:bold;
+    font-size:38px;
     color:#ffc107;
-    margin-top:5px;
-}
-
-.book-btn{
-    width:100%;
-    border:0;
-    padding:16px;
-    margin-top:18px;
-    background:#25D366;
-    color:white;
-    border-radius:12px;
-    font-size:17px;
     font-weight:bold;
-    cursor:pointer;
+    margin:5px;
 }
 
+.book-btn,
 .history-btn{
     width:100%;
     border:0;
-    padding:15px;
-    margin-top:10px;
-    background:#111;
-    color:white;
+    padding:16px;
+    margin-top:15px;
     border-radius:12px;
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.info{
-    max-width:1000px;
+.book-btn{
+    background:#25D366;
+    color:#fff;
+}
+
+.history-btn{
+    background:#111;
+    color:#fff;
+}
+
+/* CONFIRMATION */
+
+.confirmation{
+    display:none;
+    width:92%;
+    max-width:700px;
     margin:30px auto;
-    padding:20px;
+    background:#fff;
+    border-radius:20px;
+    padding:28px;
     text-align:center;
+    box-shadow:0 10px 35px rgba(0,0,0,.12);
 }
 
-.info h2{
-    margin-bottom:25px;
+.success-icon{
+    font-size:55px;
 }
 
-.features{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
+.confirmation h2{
+    margin:10px 0;
 }
 
-.feature{
-    background:white;
-    padding:25px 15px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.06);
+.booking-id{
+    background:#111;
+    color:#ffc107;
+    padding:15px;
+    border-radius:12px;
+    font-size:23px;
+    font-weight:bold;
+    margin:20px 0;
+    letter-spacing:1px;
 }
 
-.feature .icon{
-    font-size:30px;
+.qr-box{
+    display:flex;
+    justify-content:center;
+    margin:20px 0;
+}
+
+.qr-wrapper{
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
+
+.qr-title{
+    font-weight:bold;
     margin-bottom:10px;
 }
 
-.feature h3{
-    margin-bottom:8px;
+.action-btn{
+    border:0;
+    padding:13px 18px;
+    margin:5px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-.feature p{
-    color:#666;
-    font-size:14px;
+.download-btn{
+    background:#111;
+    color:#fff;
 }
 
-.history-section{
+.whatsapp-btn{
+    background:#25D366;
+    color:#fff;
+}
+
+.new-booking-btn{
+    background:#ffc107;
+    color:#111;
+}
+
+/* BOOKING DETAILS */
+
+.booking-summary{
+    text-align:left;
+    background:#f7f7f7;
+    padding:18px;
+    border-radius:12px;
+    line-height:1.9;
+    margin-top:20px;
+}
+
+.booking-summary strong{
+    color:#111;
+}
+
+/* HISTORY */
+
+.history{
     display:none;
+    width:92%;
     max-width:900px;
     margin:30px auto;
-    padding:20px;
 }
 
-.history-section h2{
+.history h2{
     margin-bottom:20px;
 }
 
@@ -238,31 +284,27 @@ header{
 }
 
 .history-search button{
-    padding:14px 20px;
-    border:0;
     background:#111;
-    color:white;
+    color:#fff;
+    border:0;
+    padding:14px 20px;
     border-radius:10px;
     cursor:pointer;
 }
 
-.booking-item{
-    background:white;
-    border-radius:15px;
+.history-item{
+    background:#fff;
     padding:20px;
     margin-bottom:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
-.booking-top{
+.history-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
     margin-bottom:15px;
-}
-
-.booking-id{
-    font-weight:bold;
 }
 
 .status{
@@ -282,22 +324,18 @@ header{
     color:#dc2626;
 }
 
-.booking-details{
-    line-height:1.8;
+.history-details{
     color:#555;
-}
-
-.booking-details strong{
-    color:#222;
+    line-height:1.8;
 }
 
 .cancel-btn{
-    margin-top:15px;
-    padding:10px 15px;
-    border:0;
-    border-radius:8px;
     background:#dc2626;
-    color:white;
+    color:#fff;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    margin-top:15px;
     cursor:pointer;
     font-weight:bold;
 }
@@ -307,18 +345,59 @@ header{
     cursor:not-allowed;
 }
 
-.cancel-note{
-    margin-top:8px;
-    font-size:12px;
+.qr-history-btn{
+    background:#111;
+    color:#fff;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.empty{
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
     color:#777;
 }
 
-.empty-history{
-    background:white;
-    padding:30px;
+/* FEATURES */
+
+.features{
+    width:92%;
+    max-width:1000px;
+    margin:40px auto;
     text-align:center;
+}
+
+.features h2{
+    margin-bottom:25px;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.feature{
+    background:#fff;
+    padding:25px 15px;
     border-radius:15px;
-    color:#777;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.feature-icon{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.feature p{
+    color:#666;
+    font-size:14px;
+    margin-top:8px;
 }
 
 footer{
@@ -335,30 +414,21 @@ footer strong{
 
 .toast{
     position:fixed;
-    bottom:25px;
     left:50%;
+    bottom:25px;
     transform:translateX(-50%);
     background:#111;
-    color:white;
+    color:#fff;
     padding:14px 22px;
     border-radius:10px;
     display:none;
     z-index:9999;
-    box-shadow:0 5px 20px rgba(0,0,0,.3);
 }
 
 @media(max-width:600px){
 
-    .hero{
-        padding:40px 15px 75px;
-    }
-
     .hero h1{
         font-size:32px;
-    }
-
-    .booking-card{
-        padding:20px;
     }
 
     .two-column{
@@ -366,7 +436,7 @@ footer strong{
         gap:0;
     }
 
-    .features{
+    .feature-grid{
         grid-template-columns:1fr;
     }
 
@@ -374,25 +444,21 @@ footer strong{
         flex-direction:column;
     }
 
-    .booking-top{
+    .history-top{
+        flex-direction:column;
         align-items:flex-start;
         gap:10px;
-        flex-direction:column;
     }
 
-    .logo{
-        font-size:20px;
-    }
-
-    .header-btn{
-        padding:8px 12px;
-        font-size:13px;
-    }
 }
+
 </style>
 </head>
 
 <body>
+
+
+<!-- HEADER -->
 
 <header>
 
@@ -400,16 +466,20 @@ footer strong{
         Drive <span>with Smile</span>
     </div>
 
-    <a class="header-btn" onclick="scrollToBooking()">
+    <div class="nav-btn" onclick="scrollBooking()">
         Book Now
-    </a>
+    </div>
 
 </header>
 
 
+<!-- HERO -->
+
 <section class="hero">
 
-    <h1>Ride <span>with Smile</span> 🚕</h1>
+    <h1>
+        Ride <span>with Smile</span> 🚕
+    </h1>
 
     <p>
         Comfortable & Reliable Hourly Cab Service
@@ -418,11 +488,11 @@ footer strong{
 </section>
 
 
-<!-- BOOKING -->
+<!-- BOOKING FORM -->
 
 <section class="booking-card" id="booking">
 
-    <h2>Book Your Ride</h2>
+    <h2>🚕 Book Your Ride</h2>
 
 
     <div class="input-group">
@@ -445,9 +515,9 @@ footer strong{
         <input
             type="tel"
             id="mobile"
-            placeholder="Enter 10 digit mobile number"
             maxlength="10"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            placeholder="Enter 10 digit mobile number"
+            oninput="numbersOnly(this)"
         >
 
     </div>
@@ -547,39 +617,104 @@ footer strong{
             ₹600
         </div>
 
-        <small id="summary">
+        <small id="fareSummary">
             1 Hour × ₹600
         </small>
 
     </div>
 
 
-    <button class="book-btn" onclick="bookRide()">
-        📱 Confirm Booking on WhatsApp
+    <button class="book-btn" onclick="createBooking()">
+        ✅ Confirm Booking
     </button>
 
 
-    <button class="history-btn" onclick="showHistoryBox()">
+    <button class="history-btn" onclick="openHistory()">
         📋 Check My Booking History
     </button>
 
 </section>
 
 
+<!-- BOOKING CONFIRMATION -->
+
+<section class="confirmation" id="confirmation">
+
+    <div class="success-icon">
+        🎉
+    </div>
+
+    <h2>Booking Confirmed!</h2>
+
+    <p>Your booking has been successfully created.</p>
+
+
+    <div class="booking-id" id="bookingId">
+        DWS-XXXXXXXX
+    </div>
+
+
+    <div class="qr-title">
+        Scan / Save Your Booking QR
+    </div>
+
+
+    <div class="qr-box">
+
+        <div class="qr-wrapper">
+
+            <div id="qrcode"></div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="action-btn download-btn"
+        onclick="downloadQR()"
+    >
+        ⬇️ Download QR
+    </button>
+
+
+    <button
+        class="action-btn whatsapp-btn"
+        onclick="sendWhatsApp()"
+    >
+        📱 Send on WhatsApp
+    </button>
+
+
+    <button
+        class="action-btn new-booking-btn"
+        onclick="newBooking()"
+    >
+        🚕 New Booking
+    </button>
+
+
+    <div class="booking-summary" id="bookingSummary">
+    </div>
+
+</section>
+
+
 <!-- HISTORY -->
 
-<section class="history-section" id="historySection">
+<section class="history" id="history">
 
-    <h2>My Booking History</h2>
+    <h2>📋 My Booking History</h2>
+
 
     <div class="history-search">
 
         <input
             type="tel"
             id="historyMobile"
-            placeholder="Enter your mobile number"
             maxlength="10"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            placeholder="Enter your mobile number"
+            oninput="numbersOnly(this)"
         >
 
         <button onclick="loadHistory()">
@@ -588,25 +723,31 @@ footer strong{
 
     </div>
 
+
     <div id="historyList"></div>
 
 </section>
 
 
-<section class="info">
+<!-- FEATURES -->
+
+<section class="features">
 
     <h2>Why Drive with Smile?</h2>
 
-    <div class="features">
+
+    <div class="feature-grid">
 
         <div class="feature">
 
-            <div class="icon">💰</div>
+            <div class="feature-icon">
+                💰
+            </div>
 
             <h3>Simple Pricing</h3>
 
             <p>
-                Flat ₹600 per hour with transparent pricing.
+                Flat ₹600 per hour.
             </p>
 
         </div>
@@ -614,12 +755,14 @@ footer strong{
 
         <div class="feature">
 
-            <div class="icon">🚕</div>
+            <div class="feature-icon">
+                🔐
+            </div>
 
-            <h3>Comfortable Ride</h3>
+            <h3>Secure Booking</h3>
 
             <p>
-                Enjoy a comfortable and convenient journey.
+                Every booking gets a unique ID and QR.
             </p>
 
         </div>
@@ -627,12 +770,14 @@ footer strong{
 
         <div class="feature">
 
-            <div class="icon">😊</div>
+            <div class="feature-icon">
+                😊
+            </div>
 
             <h3>Drive with Smile</h3>
 
             <p>
-                Reliable service with a customer-first experience.
+                Comfortable and reliable service.
             </p>
 
         </div>
@@ -644,8 +789,9 @@ footer strong{
 
 <footer>
 
-    © 2026 <strong>Drive with Smile</strong> |
-    All Rights Reserved
+    © 2026
+    <strong>Drive with Smile</strong>
+    | All Rights Reserved
 
 </footer>
 
@@ -655,29 +801,65 @@ footer strong{
 
 <script>
 
+
+// ============================================
+// SETTINGS
+// ============================================
+
 const RATE = 600;
+
 const CANCEL_LIMIT = 10 * 60 * 1000;
 
+const STORAGE_KEY =
+    "driveWithSmileBookings";
 
-// -----------------------------------
-// DATE SETUP
-// -----------------------------------
+
+// ============================================
+// GLOBAL CURRENT BOOKING
+// ============================================
+
+let currentBooking = null;
+
+
+// ============================================
+// DATE MINIMUM
+// ============================================
 
 const today = new Date();
 
-const yyyy = today.getFullYear();
+const year =
+    today.getFullYear();
 
-const mm = String(today.getMonth() + 1).padStart(2,"0");
+const month =
+    String(today.getMonth()+1)
+    .padStart(2,"0");
 
-const dd = String(today.getDate()).padStart(2,"0");
+const day =
+    String(today.getDate())
+    .padStart(2,"0");
 
 document.getElementById("date").min =
-    `${yyyy}-${mm}-${dd}`;
+    `${year}-${month}-${day}`;
 
 
-// -----------------------------------
-// FARE CALCULATION
-// -----------------------------------
+// ============================================
+// NUMBERS ONLY
+// ============================================
+
+function numbersOnly(input){
+
+    input.value =
+        input.value.replace(
+            /[^0-9]/g,
+            ""
+        );
+
+}
+
+
+// ============================================
+// CALCULATE FARE
+// ============================================
 
 function calculateFare(){
 
@@ -686,96 +868,141 @@ function calculateFare(){
             document.getElementById("hours").value
         );
 
-    const total = hours * RATE;
+    const total =
+        hours * RATE;
+
 
     document.getElementById("fare").innerText =
-        "₹" + total.toLocaleString("en-IN");
+        "₹" +
+        total.toLocaleString("en-IN");
 
-    document.getElementById("summary").innerText =
+
+    document.getElementById("fareSummary").innerText =
         hours +
         " Hour" +
         (hours > 1 ? "s" : "") +
         " × ₹600";
+
 }
 
 
-// -----------------------------------
-// GENERATE BOOKING ID
-// -----------------------------------
-
-function generateBookingId(){
-
-    const random =
-        Math.floor(
-            100000 + Math.random() * 900000
-        );
-
-    return "DWS" + random;
-}
-
-
-// -----------------------------------
+// ============================================
 // GET BOOKINGS
-// -----------------------------------
+// ============================================
 
 function getBookings(){
 
     return JSON.parse(
-        localStorage.getItem("driveWithSmileBookings") || "[]"
+        localStorage.getItem(STORAGE_KEY)
+        || "[]"
     );
 
 }
 
 
-// -----------------------------------
+// ============================================
 // SAVE BOOKINGS
-// -----------------------------------
+// ============================================
 
 function saveBookings(bookings){
 
     localStorage.setItem(
-        "driveWithSmileBookings",
+        STORAGE_KEY,
         JSON.stringify(bookings)
     );
 
 }
 
 
-// -----------------------------------
-// BOOK RIDE
-// -----------------------------------
+// ============================================
+// UNIQUE BOOKING ID
+// ============================================
 
-function bookRide(){
-
-    const name =
-        document.getElementById("name").value.trim();
-
-    const mobile =
-        document.getElementById("mobile").value.trim();
-
-    const from =
-        document.getElementById("from").value.trim();
-
-    const to =
-        document.getElementById("to").value.trim();
+function generateBookingID(){
 
     const date =
-        document.getElementById("date").value;
+        new Date();
+
+    const y =
+        date.getFullYear();
+
+    const m =
+        String(date.getMonth()+1)
+        .padStart(2,"0");
+
+    const d =
+        String(date.getDate())
+        .padStart(2,"0");
+
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+    let code = "";
+
+    for(let i=0;i<5;i++){
+
+        code +=
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
+    }
+
+
+    return `DWS-${y}${m}${d}-${code}`;
+
+}
+
+
+// ============================================
+// CREATE BOOKING
+// ============================================
+
+function createBooking(){
+
+    const name =
+        document.getElementById("name")
+        .value.trim();
+
+    const mobile =
+        document.getElementById("mobile")
+        .value.trim();
+
+    const from =
+        document.getElementById("from")
+        .value.trim();
+
+    const to =
+        document.getElementById("to")
+        .value.trim();
+
+    const date =
+        document.getElementById("date")
+        .value;
 
     const time =
-        document.getElementById("time").value;
+        document.getElementById("time")
+        .value;
 
     const hours =
         parseInt(
-            document.getElementById("hours").value
+            document.getElementById("hours")
+            .value
         );
 
 
-    // Validation
+    // VALIDATION
 
     if(!name){
 
-        showToast("Please enter passenger name.");
+        showToast(
+            "Please enter passenger name."
+        );
 
         return;
     }
@@ -784,7 +1011,7 @@ function bookRide(){
     if(!/^[0-9]{10}$/.test(mobile)){
 
         showToast(
-            "Please enter a valid 10 digit mobile number."
+            "Please enter valid 10 digit mobile number."
         );
 
         return;
@@ -831,146 +1058,396 @@ function bookRide(){
     }
 
 
-    const total =
+    const fare =
         hours * RATE;
 
 
     const booking = {
 
-        id: generateBookingId(),
+        id:
+            generateBookingID(),
 
-        name: name,
+        name:
+            name,
 
-        mobile: mobile,
+        mobile:
+            mobile,
 
-        from: from,
+        from:
+            from,
 
-        to: to,
+        to:
+            to,
 
-        date: date,
+        date:
+            date,
 
-        time: time,
+        time:
+            time,
 
-        hours: hours,
+        hours:
+            hours,
 
-        fare: total,
+        fare:
+            fare,
 
-        status: "Confirmed",
+        status:
+            "Confirmed",
 
-        createdAt: Date.now()
+        createdAt:
+            Date.now()
 
     };
 
 
-    let bookings =
+    // SAVE
+
+    const bookings =
         getBookings();
 
 
-    bookings.unshift(booking);
+    bookings.unshift(
+        booking
+    );
 
 
-    saveBookings(bookings);
+    saveBookings(
+        bookings
+    );
 
 
-    // WhatsApp
+    currentBooking =
+        booking;
 
-    const message =
-`🚕 *DRIVE WITH SMILE - BOOKING*
 
-🆔 Booking ID: ${booking.id}
+    // SHOW CONFIRMATION
 
-👤 Name: ${name}
+    showConfirmation(
+        booking
+    );
 
-📱 Mobile: ${mobile}
+}
 
-📍 Pickup: ${from}
 
-📍 Drop: ${to}
+// ============================================
+// SHOW CONFIRMATION
+// ============================================
 
-📅 Date: ${date}
+function showConfirmation(booking){
 
-⏰ Time: ${time}
+    document.getElementById(
+        "booking"
+    ).style.display = "none";
 
-⏱️ Hours: ${hours}
 
-💰 Fare: ₹${total.toLocaleString("en-IN")}
+    document.getElementById(
+        "confirmation"
+    ).style.display = "block";
 
-✅ Status: Confirmed
 
-⏳ Cancellation allowed within 10 minutes only.`;
+    document.getElementById(
+        "bookingId"
+    ).innerText =
+        booking.id;
+
+
+    // CLEAR OLD QR
+
+    document.getElementById(
+        "qrcode"
+    ).innerHTML = "";
+
+
+    /*
+      QR DATA
+
+      Production version mein
+      isko database verification URL
+      se replace karna better hoga.
+    */
+
+    const qrData =
+`Drive with Smile
+Booking ID: ${booking.id}
+Passenger: ${booking.name}
+Mobile: ${booking.mobile}
+Pickup: ${booking.from}
+Drop: ${booking.to}
+Date: ${booking.date}
+Time: ${booking.time}
+Hours: ${booking.hours}
+Fare: ₹${booking.fare}
+Status: ${booking.status}`;
+
+
+    new QRCode(
+        document.getElementById("qrcode"),
+        {
+            text: qrData,
+            width:220,
+            height:220,
+            correctLevel:
+                QRCode.CorrectLevel.H
+        }
+    );
+
+
+    document.getElementById(
+        "bookingSummary"
+    ).innerHTML = `
+
+        <div>
+            👤 <strong>Passenger:</strong>
+            ${escapeHTML(booking.name)}
+        </div>
+
+        <div>
+            📱 <strong>Mobile:</strong>
+            ${escapeHTML(booking.mobile)}
+        </div>
+
+        <div>
+            📍 <strong>Pickup:</strong>
+            ${escapeHTML(booking.from)}
+        </div>
+
+        <div>
+            📍 <strong>Drop:</strong>
+            ${escapeHTML(booking.to)}
+        </div>
+
+        <div>
+            📅 <strong>Date:</strong>
+            ${escapeHTML(booking.date)}
+        </div>
+
+        <div>
+            ⏰ <strong>Time:</strong>
+            ${escapeHTML(booking.time)}
+        </div>
+
+        <div>
+            ⏱️ <strong>Duration:</strong>
+            ${booking.hours} Hour
+            ${booking.hours > 1 ? "s" : ""}
+        </div>
+
+        <div>
+            💰 <strong>Total Fare:</strong>
+            ₹${booking.fare.toLocaleString("en-IN")}
+        </div>
+
+        <div>
+            ⏳ <strong>Cancellation:</strong>
+            Allowed for 10 minutes after booking.
+        </div>
+
+    `;
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    // WhatsApp automatically opens
+
+    setTimeout(
+        sendWhatsApp,
+        700
+    );
+
+}
+
+
+// ============================================
+// WHATSAPP
+// ============================================
+
+function sendWhatsApp(){
+
+    if(!currentBooking){
+
+        showToast(
+            "Booking information not found."
+        );
+
+        return;
+    }
+
+
+    const b =
+        currentBooking;
 
 
     /*
       IMPORTANT:
-      Yahan apna WhatsApp number dalein.
-      Country code ke saath.
+      Replace this number with
+      your business WhatsApp number.
 
       Example:
       919876543210
     */
 
-    const whatsappNumber =
+    const businessNumber =
         "919XXXXXXXXX";
 
 
-    const whatsappURL =
+    /*
+      QR image WhatsApp ke through
+      wa.me se direct attach nahi ki ja sakti.
+
+      Isliye booking details + QR
+      generate karne ki instruction
+      send hogi.
+    */
+
+    const message =
+`🚕 *DRIVE WITH SMILE*
+
+✅ *BOOKING CONFIRMED*
+
+🆔 Booking ID:
+${b.id}
+
+👤 Passenger:
+${b.name}
+
+📱 Mobile:
+${b.mobile}
+
+📍 Pickup:
+${b.from}
+
+📍 Drop:
+${b.to}
+
+📅 Date:
+${b.date}
+
+⏰ Time:
+${b.time}
+
+⏱️ Duration:
+${b.hours} Hour${b.hours > 1 ? "s" : ""}
+
+💰 Fare:
+₹${b.fare.toLocaleString("en-IN")}
+
+🎟️ Your Booking QR has been generated on the website.
+
+⏳ Cancellation is allowed only within 10 minutes of booking.
+
+Thank you for choosing Drive with Smile 😊`;
+
+
+    const url =
         "https://wa.me/" +
-        whatsappNumber +
+        businessNumber +
         "?text=" +
         encodeURIComponent(message);
 
 
     window.open(
-        whatsappURL,
+        url,
         "_blank"
     );
-
-
-    showToast(
-        "Booking confirmed successfully!"
-    );
-
-
-    // Clear form
-
-    document.getElementById("name").value = "";
-
-    document.getElementById("mobile").value = "";
-
-    document.getElementById("from").value = "";
-
-    document.getElementById("to").value = "";
-
-    document.getElementById("date").value = "";
-
-    document.getElementById("time").value = "";
 
 }
 
 
-// -----------------------------------
-// SHOW HISTORY BOX
-// -----------------------------------
+// ============================================
+// DOWNLOAD QR
+// ============================================
 
-function showHistoryBox(){
+function downloadQR(){
 
-    const section =
-        document.getElementById(
-            "historySection"
+    const qr =
+        document.querySelector(
+            "#qrcode img"
         );
 
-    section.style.display = "block";
 
-    section.scrollIntoView({
+    if(!qr){
+
+        showToast(
+            "QR is not ready yet."
+        );
+
+        return;
+    }
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href =
+        qr.src;
+
+
+    link.download =
+        currentBooking.id +
+        "-QR.png";
+
+
+    link.click();
+
+}
+
+
+// ============================================
+// NEW BOOKING
+// ============================================
+
+function newBooking(){
+
+    document.getElementById(
+        "confirmation"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "booking"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "booking"
+    ).scrollIntoView({
         behavior:"smooth"
     });
 
 }
 
 
-// -----------------------------------
+// ============================================
+// HISTORY
+// ============================================
+
+function openHistory(){
+
+    const history =
+        document.getElementById(
+            "history"
+        );
+
+
+    history.style.display =
+        "block";
+
+
+    history.scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+// ============================================
 // LOAD HISTORY
-// -----------------------------------
+// ============================================
 
 function loadHistory(){
 
@@ -983,7 +1460,7 @@ function loadHistory(){
     if(!/^[0-9]{10}$/.test(mobile)){
 
         showToast(
-            "Please enter a valid 10 digit mobile number."
+            "Please enter valid 10 digit mobile number."
         );
 
         return;
@@ -994,7 +1471,7 @@ function loadHistory(){
         getBookings();
 
 
-    const passengerBookings =
+    const results =
         bookings.filter(
             booking =>
                 booking.mobile === mobile
@@ -1007,16 +1484,23 @@ function loadHistory(){
         );
 
 
-    if(passengerBookings.length === 0){
+    if(results.length === 0){
 
         list.innerHTML = `
-            <div class="empty-history">
-                <h3>No Booking Found</h3>
+
+            <div class="empty">
+
+                <h3>
+                    No Booking Found
+                </h3>
+
                 <p>
                     No booking history found
                     for this mobile number.
                 </p>
+
             </div>
+
         `;
 
         return;
@@ -1024,140 +1508,127 @@ function loadHistory(){
 
 
     list.innerHTML =
-        passengerBookings
+        results
         .map(
-            booking =>
-                createBookingHTML(booking)
+            createHistoryCard
         )
         .join("");
-
-
-    startCancelTimers();
 
 }
 
 
-// -----------------------------------
-// CREATE BOOKING HTML
-// -----------------------------------
+// ============================================
+// HISTORY CARD
+// ============================================
 
-function createBookingHTML(booking){
+function createHistoryCard(b){
+
+    const elapsed =
+        Date.now() -
+        b.createdAt;
+
 
     const canCancel =
-        Date.now() -
-        booking.createdAt <
-        CANCEL_LIMIT &&
-        booking.status === "Confirmed";
+        elapsed < CANCEL_LIMIT &&
+        b.status === "Confirmed";
 
 
     return `
 
-        <div
-            class="booking-item"
-            id="booking-${booking.id}"
-        >
+        <div class="history-item">
 
-            <div class="booking-top">
+            <div class="history-top">
 
-                <div class="booking-id">
-                    ${booking.id}
-                </div>
+                <strong>
+                    ${escapeHTML(b.id)}
+                </strong>
 
-                <div
+                <span
                     class="status ${
-                        booking.status === "Confirmed"
+                        b.status === "Confirmed"
                         ? "confirmed"
                         : "cancelled"
                     }"
                 >
-                    ${booking.status}
-                </div>
+                    ${b.status}
+                </span>
 
             </div>
 
 
-            <div class="booking-details">
+            <div class="history-details">
 
-                <div>
-                    👤
-                    <strong>Passenger:</strong>
-                    ${booking.name}
-                </div>
+                👤
+                <strong>
+                    ${escapeHTML(b.name)}
+                </strong>
+                <br>
 
-                <div>
-                    📍
-                    <strong>Pickup:</strong>
-                    ${booking.from}
-                </div>
+                📍
+                ${escapeHTML(b.from)}
+                →
+                ${escapeHTML(b.to)}
+                <br>
 
-                <div>
-                    📍
-                    <strong>Drop:</strong>
-                    ${booking.to}
-                </div>
+                📅
+                ${b.date}
+                |
+                ⏰
+                ${b.time}
+                <br>
 
-                <div>
-                    📅
-                    <strong>Date:</strong>
-                    ${booking.date}
-                </div>
+                ⏱️
+                ${b.hours} Hour${b.hours > 1 ? "s" : ""}
+                <br>
 
-                <div>
-                    ⏰
-                    <strong>Time:</strong>
-                    ${booking.time}
-                </div>
-
-                <div>
-                    ⏱️
-                    <strong>Duration:</strong>
-                    ${booking.hours} Hour
-                    ${booking.hours > 1 ? "s" : ""}
-                </div>
-
-                <div>
-                    💰
-                    <strong>Fare:</strong>
-                    ₹${booking.fare.toLocaleString("en-IN")}
-                </div>
+                💰
+                ₹${b.fare.toLocaleString("en-IN")}
 
             </div>
+
+
+            <button
+                class="qr-history-btn"
+                onclick="showHistoryQR('${b.id}')"
+            >
+                📱 View QR
+            </button>
 
 
             ${
-                booking.status === "Confirmed"
+                b.status === "Confirmed"
                 ?
                 `
                 <button
                     class="cancel-btn"
-                    id="cancel-${booking.id}"
-                    onclick="cancelBooking('${booking.id}')"
+                    onclick="cancelBooking('${b.id}')"
                     ${canCancel ? "" : "disabled"}
                 >
                     ${
                         canCancel
-                        ? "Cancel Booking"
-                        : "Cancellation Closed"
+                        ?
+                        "Cancel Booking"
+                        :
+                        "Cancellation Closed"
                     }
                 </button>
 
-                <div
-                    class="cancel-note"
-                    id="timer-${booking.id}"
-                >
+                <div style="
+                    font-size:12px;
+                    color:#777;
+                    margin-top:8px;
+                ">
                     ${
                         canCancel
-                        ? "Cancellation available for 10 minutes after booking."
-                        : "10 minute cancellation window has expired."
+                        ?
+                        "Cancellation available within 10 minutes."
+                        :
+                        "10-minute cancellation window expired."
                     }
                 </div>
                 `
                 :
-                `
-                <div class="cancel-note">
-                    This booking has been cancelled.
-                </div>
-                `
+                ""
             }
 
         </div>
@@ -1167,20 +1638,20 @@ function createBookingHTML(booking){
 }
 
 
-// -----------------------------------
+// ============================================
 // CANCEL BOOKING
-// -----------------------------------
+// ============================================
 
 function cancelBooking(id){
 
-    let bookings =
+    const bookings =
         getBookings();
 
 
     const index =
         bookings.findIndex(
-            booking =>
-                booking.id === id
+            b =>
+                b.id === id
         );
 
 
@@ -1203,14 +1674,199 @@ function cancelBooking(id){
         booking.createdAt;
 
 
-    // STRICT 10 MINUTE CHECK
+    /*
+      SERVER-SIDE equivalent logic:
+      cancellation allowed ONLY before
+      10 minutes.
+    */
 
-    if(elapsed >= CANCEL_LIMIT){
+    if(
+        elapsed >=
+        CANCEL_LIMIT
+    ){
 
         showToast(
-            "Sorry! Cancellation time of 10 minutes has expired."
+            "Sorry! 10-minute cancellation window has expired."
         );
 
         loadHistory();
 
-     
+        return;
+    }
+
+
+    if(
+        booking.status !==
+        "Confirmed"
+    ){
+
+        showToast(
+            "This booking is already cancelled."
+        );
+
+        return;
+    }
+
+
+    const answer =
+        confirm(
+            "Are you sure you want to cancel this booking?"
+        );
+
+
+    if(!answer){
+
+        return;
+    }
+
+
+    booking.status =
+        "Cancelled";
+
+
+    booking.cancelledAt =
+        Date.now();
+
+
+    saveBookings(
+        bookings
+    );
+
+
+    showToast(
+        "Booking cancelled successfully."
+    );
+
+
+    loadHistory();
+
+}
+
+
+// ============================================
+// SHOW QR FROM HISTORY
+// ============================================
+
+function showHistoryQR(id){
+
+    const bookings =
+        getBookings();
+
+
+    const booking =
+        bookings.find(
+            b =>
+                b.id === id
+        );
+
+
+    if(!booking){
+
+        showToast(
+            "Booking not found."
+        );
+
+        return;
+    }
+
+
+    currentBooking =
+        booking;
+
+
+    showConfirmation(
+        booking
+    );
+
+}
+
+
+// ============================================
+// SCROLL BOOKING
+// ============================================
+
+function scrollBooking(){
+
+    document.getElementById(
+        "booking"
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+// ============================================
+// TOAST
+// ============================================
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        message;
+
+
+    toast.style.display =
+        "block";
+
+
+    setTimeout(
+        function(){
+
+            toast.style.display =
+                "none";
+
+        },
+        3000
+    );
+
+}
+
+
+// ============================================
+// HTML SECURITY
+// ============================================
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// ============================================
+// AUTO FARE
+// ============================================
+
+calculateFare();
+
+</script>
+
+</body>
+</html>
