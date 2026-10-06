@@ -1,75 +1,1860 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Drive with Smile - Admin</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drive with Smile - Admin Panel</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b0b0b;color:#fff;font:14px Arial}.login{min-height:100vh;display:grid;place-items:center}.box,.card{background:#171717;border:1px solid #333;border-radius:14px;padding:20px}.box{width:min(410px,92%)}h1,h2{color:#ffd400}input,select{width:100%;padding:12px;margin:6px 0 12px;background:#0d0d0d;color:#fff;border:1px solid #444;border-radius:8px}button{padding:11px 15px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}.yellow{background:#ffd400}.dark{background:#333;color:#fff}.app{display:none}.side{position:fixed;width:230px;top:0;bottom:0;background:#111;border-right:1px solid #333;padding:20px}.side button{width:100%;margin:4px 0;text-align:left;background:transparent;color:#bbb}.side button:hover,.side button.active{background:#252525;color:#ffd400}.main{margin-left:230px;padding:24px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{background:#171717;border:1px solid #333;padding:18px;border-radius:12px}.stat b{display:block;color:#ffd400;font-size:27px;margin-top:8px}.section{display:none}.section.active{display:block}.table{width:100%;border-collapse:collapse;margin-top:15px}.table th,.table td{padding:11px;border-bottom:1px solid #292929;text-align:left}.table th{color:#aaa}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.modal{display:none;position:fixed;inset:0;background:#000c;place-items:center;z-index:5}.modal.show{display:grid}.modal .box{width:min(500px,92%)}.green{color:#4cff82}.red{color:#ff6666}.top{display:flex;justify-content:space-between;align-items:center}.error{color:#ff6666}@media(max-width:800px){.side{position:static;width:100%}.main{margin:0;padding:14px}.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}@media(max-width:480px){.stats{grid-template-columns:1fr}}
-</style></head><body>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-<div id="login" class="login"><div class="box">
-<h1>Drive with Smile</h1><h2>Admin Login</h2>
-<label>Username</label><input id="au" value="admin">
-<label>Password</label><input id="ap" type="password" value="admin123">
-<div id="err" class="error"></div><button class="yellow" style="width:100%" onclick="login()">Login</button>
-<p style="color:#777">Demo: admin / admin123</p></div></div>
+body{
+  background:#f5f6f8;
+  color:#222;
+}
 
-<div id="app" class="app">
-<aside class="side"><h2>Drive with Smile</h2>
-<button class="active" onclick="show('home',this)">🏠 Dashboard</button>
-<button onclick="show('allot',this)">🚕 Driver Allotment</button>
-<button onclick="show('drivers',this)">👨‍✈️ Add / Manage Drivers</button>
-<button onclick="show('users',this)">👥 Users</button>
-<button onclick="show('payments',this)">💳 Payments</button>
-<button onclick="show('payout',this)">💰 Payout</button>
-<button onclick="show('bookings',this)">📋 Bookings</button>
-<button onclick="show('reports',this)">📊 Reports</button>
-<button onclick="logout()">🚪 Logout</button></aside>
+button{
+  border:0;
+  cursor:pointer;
+}
 
-<main class="main">
-<div class="top"><div><h1 id="title">Dashboard</h1><span style="color:#888">Admin Panel</span></div><button class="yellow" onclick="open('driverModal')">+ Add Driver</button></div>
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#111,#292929);
+}
 
-<section id="home" class="section active"><div class="stats">
-<div class="stat">Users<b id="usersN">0</b></div><div class="stat">Drivers<b id="driversN">0</b></div><div class="stat">Bookings<b id="bookingsN">0</b></div><div class="stat">Revenue<b id="revenue">₹0</b></div>
-</div><div class="card"><h2>Recent Bookings</h2><div id="recent"></div></div></section>
+.login-box{
+  width:90%;
+  max-width:400px;
+  background:#fff;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
 
-<section id="allot" class="section"><div class="card"><h2>Driver Allot to Passenger</h2><div class="grid"><div><label>Booking</label><select id="ab"></select></div><div><label>Available Driver</label><select id="ad"></select></div></div><button class="yellow" onclick="allot()">Allot Driver</button></div><div class="card"><h2>Allotments</h2><div id="allots"></div></div></section>
+.logo{
+  text-align:center;
+  font-size:28px;
+  font-weight:800;
+  color:#f5b400;
+  margin-bottom:8px;
+}
 
-<section id="drivers" class="section"><div class="card"><h2>Drivers</h2><button class="yellow" onclick="open('driverModal')">+ Add Driver</button><div id="drivers"></div></div></section>
-<section id="users" class="section"><div class="card"><h2>Users</h2><button class="yellow" onclick="open('userModal')">+ Add User</button><div id="users"></div></div></section>
-<section id="payments" class="section"><div class="card"><h2>Payments</h2><div id="payments"></div></div></section>
-<section id="payout" class="section"><div class="stats"><div class="stat">Pending Payout<b id="pending">₹0</b></div><div class="stat">Paid Payout<b id="paid">₹0</b></div></div><div class="card"><h2>Driver Payout</h2><div id="payout"></div></div></section>
-<section id="bookings" class="section"><div class="card"><h2>All Bookings</h2><div id="allBookings"></div></div></section>
-<section id="reports" class="section"><div class="card"><h2>Reports</h2><div id="report"></div></div></section>
-</main></div>
+.login-box h2{
+  text-align:center;
+  margin-bottom:25px;
+}
 
-<div id="driverModal" class="modal"><div class="box"><h2>Add Driver</h2><input id="dn" placeholder="Driver Name"><input id="dm" placeholder="Mobile"><input id="dv" placeholder="Vehicle Number"><select id="dt"><option>Sedan</option><option>SUV</option><option>Hatchback</option></select><button class="yellow" onclick="addDriver()">Save</button> <button class="dark" onclick="closeM('driverModal')">Cancel</button></div></div>
-<div id="userModal" class="modal"><div class="box"><h2>Add User</h2><input id="un" placeholder="Passenger Name"><input id="um" placeholder="Mobile"><button class="yellow" onclick="addUser()">Save</button> <button class="dark" onclick="closeM('userModal')">Cancel</button></div></div>
+input,select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  margin:7px 0 14px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:#f5b400;
+}
+
+.btn{
+  padding:12px 18px;
+  border-radius:8px;
+  font-weight:bold;
+  background:#f5b400;
+  color:#111;
+}
+
+.btn-dark{
+  background:#111;
+  color:#fff;
+}
+
+.btn-danger{
+  background:#dc3545;
+  color:#fff;
+}
+
+.btn-success{
+  background:#198754;
+  color:#fff;
+}
+
+.error{
+  color:#dc3545;
+  text-align:center;
+  margin-top:10px;
+}
+
+.app{
+  display:none;
+}
+
+.sidebar{
+  position:fixed;
+  width:240px;
+  height:100vh;
+  background:#111;
+  color:#fff;
+  padding:20px 12px;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:bold;
+  color:#f5b400;
+  text-align:center;
+  padding:15px 5px 25px;
+}
+
+.nav button{
+  width:100%;
+  padding:13px;
+  margin:4px 0;
+  border-radius:8px;
+  text-align:left;
+  background:transparent;
+  color:#ddd;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:#f5b400;
+  color:#111;
+}
+
+.main{
+  margin-left:240px;
+  padding:25px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.topbar h1{
+  font-size:25px;
+}
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.card small{
+  color:#777;
+}
+
+.card h2{
+  margin-top:10px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.panel{
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+}
+
+th{
+  background:#fafafa;
+}
+
+.badge{
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.available{
+  background:#d1e7dd;
+  color:#0f5132;
+}
+
+.busy{
+  background:#fff3cd;
+  color:#664d03;
+}
+
+.cancelled{
+  background:#f8d7da;
+  color:#842029;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+
+.modal-box{
+  background:#fff;
+  width:92%;
+  max-width:450px;
+  padding:25px;
+  border-radius:15px;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.close{
+  font-size:24px;
+  background:none;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+@media(max-width:900px){
+  .sidebar{
+    width:70px;
+  }
+
+  .brand{
+    font-size:0;
+  }
+
+  .brand:first-letter{
+    font-size:25px;
+  }
+
+  .nav button{
+    font-size:0;
+    text-align:center;
+  }
+
+  .nav button::first-letter{
+    font-size:20px;
+  }
+
+  .main{
+    margin-left:70px;
+  }
+
+  .card-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .main{
+    padding:15px;
+  }
+
+  .card-grid{
+    grid-template-columns:1fr;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+
+  <div class="login-box">
+
+    <div class="logo">DRIVE WITH SMILE</div>
+
+    <h2>Admin Login</h2>
+
+    <label>Username</label>
+    <input id="username" type="text" placeholder="Enter username">
+
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter password">
+
+    <button class="btn" style="width:100%" onclick="adminLogin()">
+      Login
+    </button>
+
+    <div class="error" id="loginError"></div>
+
+  </div>
+
+</div>
+
+
+<!-- APP -->
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      DRIVE WITH SMILE
+    </div>
+
+    <div class="nav">
+
+      <button onclick="showPage('dashboard',this)">
+        🏠 Dashboard
+      </button>
+
+      <button onclick="showPage('allotment',this)">
+        🚕 Driver Allotment
+      </button>
+
+      <button onclick="showPage('drivers',this)">
+        👨‍✈️ Drivers
+      </button>
+
+      <button onclick="showPage('users',this)">
+        👤 Users
+      </button>
+
+      <button onclick="showPage('payments',this)">
+        💳 Payments
+      </button>
+
+      <button onclick="showPage('payout',this)">
+        💰 Driver Payout
+      </button>
+
+      <button onclick="showPage('bookings',this)">
+        📋 Bookings
+      </button>
+
+      <button onclick="showPage('reports',this)">
+        📊 Reports
+      </button>
+
+      <button onclick="logout()">
+        🚪 Logout
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+
+      <button class="btn btn-dark" onclick="refreshData()">
+        ↻ Refresh
+      </button>
+    </div>
+
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section active">
+
+      <div class="card-grid">
+
+        <div class="card">
+          <small>Total Users</small>
+          <h2 id="totalUsers">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Total Drivers</small>
+          <h2 id="totalDrivers">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Total Bookings</small>
+          <h2 id="totalBookings">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Total Revenue</small>
+          <h2 id="totalRevenue">₹0</h2>
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-head">
+          <h3>Recent Bookings</h3>
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Passenger</th>
+                <th>Mobile</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Fare</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="recentBookings"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ALLOTMENT -->
+    <section id="allotment" class="section">
+
+      <div class="panel">
+
+        <div class="panel-head">
+          <h3>Allot Driver to Passenger</h3>
+        </div>
+
+        <label>Select Booking</label>
+
+        <select id="bookingSelect"></select>
+
+        <label>Select Driver</label>
+
+        <select id="driverSelect"></select>
+
+        <button class="btn" onclick="allotDriver()">
+          Allot Driver
+        </button>
+
+      </div>
+
+
+      <div class="panel">
+
+        <h3>Assigned Bookings</h3>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Booking</th>
+                <th>Passenger</th>
+                <th>Driver</th>
+                <th>Vehicle</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="assignedBookings"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DRIVERS -->
+    <section id="drivers" class="section">
+
+      <div class="panel">
+
+        <div class="panel-head">
+
+          <h3>Driver Management</h3>
+
+          <button class="btn" onclick="openModal('driverModal')">
+            + Add Driver
+          </button>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Vehicle</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="driversList"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- USERS -->
+    <section id="users" class="section">
+
+      <div class="panel">
+
+        <div class="panel-head">
+
+          <h3>User Management</h3>
+
+          <button class="btn" onclick="openModal('userModal')">
+            + Add User
+          </button>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Bookings</th>
+              </tr>
+            </thead>
+
+            <tbody id="usersList"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PAYMENTS -->
+    <section id="payments" class="section">
+
+      <div class="panel">
+
+        <h3>Passenger Payments</h3>
+
+        <br>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Passenger</th>
+                <th>Mobile</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="paymentsList"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PAYOUT -->
+    <section id="payout" class="section">
+
+      <div class="card-grid">
+
+        <div class="card">
+          <small>Total Driver Trips</small>
+          <h2 id="driverTrips">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Driver Payout</small>
+          <h2 id="driverPayout">₹0</h2>
+        </div>
+
+      </div>
+
+      <div class="panel">
+
+        <h3>Driver Payout</h3>
+
+        <br>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Driver</th>
+                <th>Trips</th>
+                <th>Gross Fare</th>
+                <th>Payout 80%</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="payoutList"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- BOOKINGS -->
+    <section id="bookings" class="section">
+
+      <div class="panel">
+
+        <h3>All Bookings</h3>
+
+        <br>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Booking ID</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Fare</th>
+                <th>Status</th>
+                <th>Driver</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="bookingsList"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- REPORTS -->
+    <section id="reports" class="section">
+
+      <div class="card-grid">
+
+        <div class="card">
+          <small>Total Users</small>
+          <h2 id="rUsers">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Total Drivers</small>
+          <h2 id="rDrivers">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Total Bookings</small>
+          <h2 id="rBookings">0</h2>
+        </div>
+
+        <div class="card">
+          <small>Cancelled</small>
+          <h2 id="rCancelled">0</h2>
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <h3>Revenue Report</h3>
+
+        <br>
+
+        <h2 id="rRevenue">₹0</h2>
+
+        <br>
+
+        <p>
+          Driver allotted:
+          <b id="rAssigned">0</b>
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- DRIVER MODAL -->
+<div class="modal" id="driverModal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h3>Add Driver</h3>
+
+      <button class="close"
+              onclick="closeModal('driverModal')">
+        ×
+      </button>
+
+    </div>
+
+    <label>Name</label>
+    <input id="driverName" placeholder="Driver name">
+
+    <label>Mobile</label>
+    <input id="driverMobile"
+           maxlength="10"
+           placeholder="Mobile number">
+
+    <label>Vehicle</label>
+    <input id="driverVehicle"
+           placeholder="Vehicle number">
+
+    <label>Vehicle Type</label>
+
+    <select id="driverType">
+
+      <option value="Sedan">Sedan</option>
+      <option value="SUV">SUV</option>
+      <option value="Hatchback">Hatchback</option>
+      <option value="Other">Other</option>
+
+    </select>
+
+    <button class="btn"
+            style="width:100%"
+            onclick="addDriver()">
+
+      Add Driver
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- USER MODAL -->
+<div class="modal" id="userModal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h3>Add User</h3>
+
+      <button class="close"
+              onclick="closeModal('userModal')">
+        ×
+      </button>
+
+    </div>
+
+    <label>Name</label>
+
+    <input id="userName"
+           placeholder="Passenger name">
+
+    <label>Mobile</label>
+
+    <input id="userMobile"
+           maxlength="10"
+           placeholder="Mobile number">
+
+    <button class="btn"
+            style="width:100%"
+            onclick="addUser()">
+
+      Add User
+
+    </button>
+
+  </div>
+
+</div>
+
 
 <script>
-const D='DWS_ADMIN_DRIVERS',U='DWS_ADMIN_USERS',B='DWS_BOOKINGS',P='DWS_ADMIN_PAYOUTS',S='DWS_ADMIN_SESSION';
-const arr=k=>JSON.parse(localStorage.getItem(k)||'[]'),save=(k,v)=>localStorage.setItem(k,JSON.stringify(v)),money=n=>'₹'+Number(n||0).toLocaleString('en-IN');
-let drivers=[],users=[],bookings=[],payouts=[];
-function login(){if(au.value==='admin'&&ap.value==='admin123'){localStorage.setItem(S,'1');start()}else err.textContent='Invalid login'}
-function start(){login.style.display='none';app.style.display='block';load();render()}
-function load(){drivers=arr(D);users=arr(U);bookings=arr(B);payouts=arr(P)}
-function logout(){localStorage.removeItem(S);location.reload()}
-function show(id,btn){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.side button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');title.textContent=btn.textContent.replace(/^\S+\s/,'');render()}
-function render(){load();usersN.textContent=users.length;driversN.textContent=drivers.length;bookingsN.textContent=bookings.length;revenue.textContent=money(bookings.filter(x=>x.status!=='Cancelled').reduce((s,x)=>s+Number(x.fare||0),0));renderRecent();renderDrivers();renderUsers();renderAllot();renderPayments();renderPayout();renderBookings();renderReports()}
-function safe(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function empty(){return '<p style="color:#777">No data available</p>'}
-function renderRecent(){let a=bookings.slice().reverse().slice(0,8);recent.innerHTML=a.length?tbl(a,['id','name','from','to','fare','status']):empty()}
-function tbl(a,cols){return '<div style="overflow:auto"><table class="table"><tr>'+cols.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+a.map(r=>'<tr>'+cols.map(c=>'<td>'+safe(c==='fare'?money(r[c]):r[c])+'</td>').join('')+'</tr>').join('')+'</table></div>'}
-function renderDrivers(){driversDiv=document.getElementById('drivers');driversDiv.innerHTML=drivers.length?'<table class="table"><tr><th>Name</th><th>Mobile</th><th>Vehicle</th><th>Status</th><th>Action</th></tr>'+drivers.map(d=>`<tr><td>${safe(d.name)}</td><td>${safe(d.mobile)}</td><td>${safe(d.vehicle)}</td><td>${d.status}</td><td><button class="dark" onclick="toggle('${d.id}')">${d.status==='Available'?'Set Busy':'Set Available'}</button></td></tr>`).join('')+'</table>':empty()}
-function renderUsers(){document.getElementById('users').innerHTML=users.length?tbl(users,['name','mobile']):empty()}
-function renderAllot(){ab.innerHTML=bookings.filter(b=>b.status!=='Cancelled').map(b=>`<option value="${b.id}">${safe(b.id)} - ${safe(b.name)}</option>`).join('');ad.innerHTML=drivers.filter(d=>d.status==='Available').map(d=>`<option value="${d.id}">${safe(d.name)} - ${safe(d.vehicle)}</option>`).join('');let a=bookings.filter(b=>b.driverId);allots.innerHTML=a.length?'<table class="table"><tr><th>Booking</th><th>Passenger</th><th>Driver</th></tr>'+a.map(b=>{let d=drivers.find(x=>x.id===b.driverId);return `<tr><td>${safe(b.id)}</td><td>${safe(b.name)}</td><td>${d?safe(d.name):'-'}</td></tr>`}).join('')+'</table>':empty()}
-function allot(){let b=bookings.find(x=>x.id===ab.value),d=drivers.find(x=>x.id===ad.value);if(!b||!d)return alert('Select booking and driver');b.driverId=d.id;d.status='Busy';save(B,bookings);save(D,drivers);alert('Driver allotted successfully');render()}
-function addDriver(){let name=dn.value.trim(),mobile=dm.value.trim(),vehicle=dv.value.trim();if(!name||!mobile||!vehicle)return alert('All details required');drivers.push({id:'DRV-'+Date.now(),name,mobile,vehicle,type:dt.value,status:'Available'});save(D,drivers);closeM('driverModal');dn.value=dm.value=dv.value='';render()}
-function toggle(id){let d=drivers.find(x=>x.id===id);d.status=d.status==='Available'?'Busy':'Available';save(D,drivers);render()}
-function addUser(){let name=un.value.trim(),mobile=um.value.trim();if(!name||!mobile)return alert('Details required');users.push({id:'USR-'+Date.now(),name,mobile});save(U,users);closeM('userModal');render()}
-function renderPayments(){payments.innerHTML=bookings.length?tbl(bookings.filter(b=>b.status!=='Cancelled').map(b=>({id:'PAY-'+b.id,booking:b.id,name:b.name,amount:b.fare,status:'Paid'})),['id','booking','name','amount','status']):empty()}
-function renderPayout(){let rows=drivers.map(d=>{let bs=bookings.filter(b=>b.driverId===d.id&&b.status!=='Cancelled'),amount=bs.reduce((s,b)=>s+Number(b.fare||0),0)*.8;return{...d,trips:bs.length,amount}});let paidN=payouts.reduce((s,x)=>s+Number(x.amount||0),0);paid.textContent=money(paidN);pending.textContent='₹0';payout.innerHTML=rows.length?'<table class="table"><tr><th>Driver</th><th>Trips</th><th>80% Payout</th><th>Action</th></tr>'+rows.map(r=>`<tr><td>${safe(r.name)}</td><td>${r.trips}</td><td>${money(r.amount)}</td><td><button class="yellow" onclick="pay('${r.id}',${r.amount})">Mark Paid</button></td></tr>`).join('')+'</table>':empty()}
-function pay(id,amount){if(!amount)return alert('No payout');let d=drivers.find(x=>x.id===id);payouts.push({id:'PO-'+Date.now(),driverId:id,driver:d.name,amount,status:'Paid',date:new Date().toISOString()});save(P,payouts);render()}
-function renderBookings(){allBookings.innerHTML=bookings.length?tbl(bookings,['id','name','mobile','from','to','fare','status']):empty()}
-function renderReports(){let total=bookings.filter(b=>b.status!=='Cancelled').reduce((s,b)=>s+Number(b.fare||0),0);report.innerHTML='<div class="card"><b>Total Users:</b> '+users.length+'</div><div class="card"><b>Total Drivers:</b> '+drivers.length+'</div><div class="card"><b>Total Bookings:</b> '+bookings.length+'</div><div class="card"><b>Revenue:</b> '+money(total)+'</div><div class="card"><b>Allotted:</b> '+bookings.filter(b=>b.driverId).length+'</div>'}
-function open(id){document.getElementById(id).classList.add('show')}function closeM(id){document.getElementById(id).classList.remove('show')}
-if(localStorage.getItem(S)==='1')start();
-</script></body></html>
+
+const KEY = {
+
+  drivers:"DWS_ADMIN_DRIVERS",
+  users:"DWS_ADMIN_USERS",
+  bookings:"DWS_BOOKINGS",
+  payouts:"DWS_ADMIN_PAYOUTS",
+  session:"DWS_ADMIN_SESSION"
+
+};
+
+
+let drivers = [];
+let users = [];
+let bookings = [];
+let payouts = [];
+
+
+function $(id){
+
+  return document.getElementById(id);
+
+}
+
+
+function getData(key){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(key) || "[]"
+    );
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+
+function saveData(key,data){
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(data)
+  );
+
+}
+
+
+function money(value){
+
+  return "₹" +
+    Number(value || 0)
+    .toLocaleString("en-IN");
+
+}
+
+
+/* LOGIN */
+
+function adminLogin(){
+
+  const username =
+    $("username").value.trim();
+
+  const password =
+    $("password").value;
+
+  if(
+    username === "admin" &&
+    password === "admin123"
+  ){
+
+    localStorage.setItem(
+      KEY.session,
+      "1"
+    );
+
+    startAdmin();
+
+  }else{
+
+    $("loginError").textContent =
+      "Invalid username or password.";
+
+  }
+
+}
+
+
+function startAdmin(){
+
+  $("loginScreen").style.display =
+    "none";
+
+  $("app").style.display =
+    "block";
+
+  loadData();
+
+  renderAll();
+
+}
+
+
+function logout(){
+
+  localStorage.removeItem(
+    KEY.session
+  );
+
+  location.reload();
+
+}
+
+
+/* LOAD DATA */
+
+function loadData(){
+
+  drivers =
+    getData(KEY.drivers);
+
+  users =
+    getData(KEY.users);
+
+  bookings =
+    getData(KEY.bookings);
+
+  payouts =
+    getData(KEY.payouts);
+
+}
+
+
+/* NAVIGATION */
+
+function showPage(page,button){
+
+  document
+    .querySelectorAll(".section")
+    .forEach(
+      s => s.classList.remove("active")
+    );
+
+  $(page).classList.add("active");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(
+      b => b.classList.remove("active")
+    );
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+  const titles = {
+
+    dashboard:"Dashboard",
+    allotment:"Driver Allotment",
+    drivers:"Drivers",
+    users:"Users",
+    payments:"Payments",
+    payout:"Driver Payout",
+    bookings:"Bookings",
+    reports:"Reports"
+
+  };
+
+  $("pageTitle").textContent =
+    titles[page] || "Dashboard";
+
+}
+
+
+/* DASHBOARD */
+
+function renderDashboard(){
+
+  $("totalUsers").textContent =
+    users.length;
+
+  $("totalDrivers").textContent =
+    drivers.length;
+
+  $("totalBookings").textContent =
+    bookings.length;
+
+  const revenue =
+    bookings
+    .filter(b =>
+      b.status !== "Cancelled"
+    )
+    .reduce(
+      (sum,b) =>
+        sum + Number(b.fare || 0),
+      0
+    );
+
+  $("totalRevenue").textContent =
+    money(revenue);
+
+
+  const recent =
+    [...bookings]
+    .reverse()
+    .slice(0,10);
+
+  $("recentBookings").innerHTML =
+    recent.map(b => `
+
+      <tr>
+
+        <td>${b.id || "-"}</td>
+
+        <td>${b.name || "-"}</td>
+
+        <td>${b.mobile || "-"}</td>
+
+        <td>${b.from || "-"}</td>
+
+        <td>${b.to || "-"}</td>
+
+        <td>${money(b.fare)}</td>
+
+        <td>
+          ${statusBadge(b.status)}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* STATUS */
+
+function statusBadge(status){
+
+  if(status === "Cancelled"){
+
+    return `<span class="badge cancelled">
+      Cancelled
+    </span>`;
+
+  }
+
+  if(status === "Completed"){
+
+    return `<span class="badge available">
+      Completed
+    </span>`;
+
+  }
+
+  return `<span class="badge available">
+    ${status || "Confirmed"}
+  </span>`;
+
+}
+
+
+/* DRIVER ALLOTMENT */
+
+function renderAllotment(){
+
+  const unassigned =
+    bookings.filter(
+      b =>
+        !b.driverId &&
+        b.status !== "Cancelled"
+    );
+
+  $("bookingSelect").innerHTML =
+
+    `<option value="">
+      Select Booking
+    </option>` +
+
+    unassigned.map(b => `
+
+      <option value="${b.id}">
+
+        ${b.id} -
+        ${b.name || "Passenger"} -
+        ${b.from || ""} → ${b.to || ""}
+
+      </option>
+
+    `).join("");
+
+
+  const availableDrivers =
+    drivers.filter(
+      d => d.status !== "Busy"
+    );
+
+  $("driverSelect").innerHTML =
+
+    `<option value="">
+      Select Driver
+    </option>` +
+
+    availableDrivers.map(d => `
+
+      <option value="${d.id}">
+
+        ${d.name} -
+        ${d.vehicle}
+
+      </option>
+
+    `).join("");
+
+
+  const assigned =
+    bookings.filter(
+      b => b.driverId
+    );
+
+  $("assignedBookings").innerHTML =
+
+    assigned.map(b => {
+
+      const driver =
+        drivers.find(
+          d => d.id === b.driverId
+        );
+
+      return `
+
+        <tr>
+
+          <td>${b.id}</td>
+
+          <td>${b.name || "-"}</td>
+
+          <td>
+            ${driver
+              ? driver.name
+              : "Driver not found"}
+          </td>
+
+          <td>
+            ${driver
+              ? driver.vehicle
+              : "-"}
+          </td>
+
+          <td>
+            ${statusBadge(b.status)}
+          </td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function allotDriver(){
+
+  const bookingId =
+    $("bookingSelect").value;
+
+  const driverId =
+    $("driverSelect").value;
+
+  if(!bookingId || !driverId){
+
+    alert(
+      "Booking aur driver select karein."
+    );
+
+    return;
+
+  }
+
+
+  const booking =
+    bookings.find(
+      b => b.id === bookingId
+    );
+
+  const driver =
+    drivers.find(
+      d => d.id === driverId
+    );
+
+
+  if(!booking || !driver){
+
+    alert("Booking/driver not found.");
+
+    return;
+
+  }
+
+
+  if(booking.driverId){
+
+    const oldDriver =
+      drivers.find(
+        d => d.id === booking.driverId
+      );
+
+    if(oldDriver){
+
+      oldDriver.status =
+        "Available";
+
+    }
+
+  }
+
+
+  booking.driverId =
+    driver.id;
+
+  driver.status =
+    "Busy";
+
+
+  saveData(
+    KEY.bookings,
+    bookings
+  );
+
+  saveData(
+    KEY.drivers,
+    drivers
+  );
+
+
+  alert(
+    "Driver successfully allotted."
+  );
+
+  renderAll();
+
+}
+
+
+/* DRIVERS */
+
+function renderDrivers(){
+
+  $("driversList").innerHTML =
+
+    drivers.map(d => `
+
+      <tr>
+
+        <td>${d.id}</td>
+
+        <td>${d.name}</td>
+
+        <td>${d.mobile}</td>
+
+        <td>${d.vehicle}</td>
+
+        <td>${d.type}</td>
+
+        <td>
+
+          <span class="badge ${
+            d.status === "Busy"
+              ? "busy"
+              : "available"
+          }">
+
+            ${d.status}
+
+          </span>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+function addDriver(){
+
+  const name =
+    $("driverName").value.trim();
+
+  const mobile =
+    $("driverMobile").value.trim();
+
+  const vehicle =
+    $("driverVehicle").value.trim();
+
+  const type =
+    $("driverType").value;
+
+
+  if(!name || !mobile || !vehicle){
+
+    alert(
+      "All driver details required."
+    );
+
+    return;
+
+  }
+
+
+  drivers.push({
+
+    id:
+      "DRV-" +
+      Date.now(),
+
+    name:name,
+
+    mobile:mobile,
+
+    vehicle:vehicle,
+
+    type:type,
+
+    status:"Available",
+
+    createdAt:
+      new Date().toISOString()
+
+  });
+
+
+  saveData(
+    KEY.drivers,
+    drivers
+  );
+
+
+  closeModal(
+    "driverModal"
+  );
+
+
+  $("driverName").value = "";
+  $("driverMobile").value = "";
+  $("driverVehicle").value = "";
+
+
+  renderAll();
+
+}
+
+
+/* USERS */
+
+function renderUsers(){
+
+  $("usersList").innerHTML =
+
+    users.map(u => {
+
+      const count =
+        bookings.filter(
+          b =>
+            b.mobile === u.mobile
+        ).length;
+
+      return `
+
+        <tr>
+
+          <td>${u.id}</td>
+
+          <td>${u.name}</td>
+
+          <td>${u.mobile}</td>
+
+          <td>${count}</td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function addUser(){
+
+  const name =
+    $("userName").value.trim();
+
+  const mobile =
+    $("userMobile").value.trim();
+
+
+  if(!name || !mobile){
+
+    alert(
+      "Name and mobile required."
+    );
+
+    return;
+
+  }
+
+
+  users.push({
+
+    id:
+      "USR-" +
+      Date.now(),
+
+    name:name,
+
+    mobile:mobile,
+
+    createdAt:
+      new Date().toISOString()
+
+  });
+
+
+  saveData(
+    KEY.users,
+    users
+  );
+
+
+  closeModal(
+    "userModal"
+  );
+
+
+  $("userName").value = "";
+  $("userMobile").value = "";
+
+
+  renderAll();
+
+}
+
+
+/* PAYMENTS */
+
+function renderPayments(){
+
+  $("paymentsList").innerHTML =
+
+    bookings.map(b => `
+
+      <tr>
+
+        <td>${b.id || "-"}</td>
+
+        <td>${b.name || "-"}</td>
+
+        <td>${b.mobile || "-"}</td>
+
+        <td>${money(b.fare)}</td>
+
+        <td>
+          ${statusBadge(b.status)}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* PAYOUT */
+
+function renderPayout(){
+
+  let totalTrips = 0;
+  let totalPayout = 0;
+
+
+  const rows =
+    drivers.map(d => {
+
+      const trips =
+        bookings.filter(
+          b =>
+            b.driverId === d.id &&
+            b.status !== "Cancelled"
+        );
+
+
+      const gross =
+        trips.reduce(
+          (sum,b) =>
+            sum + Number(b.fare || 0),
+          0
+        );
+
+
+      const payout =
+        gross * 0.80;
+
+
+      totalTrips +=
+        trips.length;
+
+      totalPayout +=
+        payout;
+
+
+      return `
+
+        <tr>
+
+          <td>${d.name}</td>
+
+          <td>${trips.length}</td>
+
+          <td>${money(gross)}</td>
+
+          <td>${money(payout)}</td>
+
+          <td>
+
+            <button
+              class="btn btn-success"
+              onclick="markPayout('${d.id}',${payout})">
+
+              Mark Paid
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+
+
+  $("driverTrips").textContent =
+    totalTrips;
+
+  $("driverPayout").textContent =
+    money(totalPayout);
+
+  $("payoutList").innerHTML =
+    rows;
+
+}
+
+
+function markPayout(driverId,amount){
+
+  if(amount <= 0){
+
+    alert(
+      "No payout available."
+    );
+
+    return;
+
+  }
+
+
+  payouts.push({
+
+    id:
+      "PAY-" +
+      Date.now(),
+
+    driverId:
+      driverId,
+
+    amount:
+      amount,
+
+    paidAt:
+      new Date().toISOString()
+
+  });
+
+
+  saveData(
+    KEY.payouts,
+    payouts
+  );
+
+
+  alert(
+    "Payout marked as paid."
+  );
+
+}
+
+
+/* BOOKINGS */
+
+function renderBookings(){
+
+  $("bookingsList").innerHTML =
+
+    bookings.map(b => {
+
+      const driver =
+        drivers.find(
+          d =>
+            d.id === b.driverId
+        );
+
+
+      return `
+
+        <tr>
+
+          <td>${b.id || "-"}</td>
+
+          <td>${b.name || "-"}</td>
+
+          <td>${b.mobile || "-"}</td>
+
+          <td>${b.from || "-"}</td>
+
+          <td>${b.to || "-"}</td>
+
+          <td>${b.date || "-"}</td>
+
+          <td>${b.time || "-"}</td>
+
+          <td>${money(b.fare)}</td>
+
+          <td>
+            ${statusBadge(b.status)}
+          </td>
+
+          <td>
+            ${driver
+              ? driver.name
+              : "Not Assigned"}
+          </td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* REPORTS */
+
+function renderReports(){
+
+  const revenue =
+    bookings
+    .filter(
+      b =>
+        b.status !== "Cancelled"
+    )
+    .reduce(
+      (sum,b) =>
+        sum + Number(b.fare || 0),
+      0
+    );
+
+
+  $("rUsers").textContent =
+    users.length;
+
+  $("rDrivers").textContent =
+    drivers.length;
+
+  $("rBookings").textContent =
+    bookings.length;
+
+  $("rCancelled").textContent =
+    bookings.filter(
+      b =>
+        b.status === "Cancelled"
+    ).length;
+
+  $("rRevenue").textContent =
+    money(revenue);
+
+  $("rAssigned").textContent =
+    bookings.filter(
+      b =>
+        b.driverId
+    ).length;
+
+}
+
+
+/* ALL */
+
+function renderAll(){
+
+  renderDashboard();
+
+  renderAllotment();
+
+  renderDrivers();
+
+  renderUsers();
+
+  renderPayments();
+
+  renderPayout();
+
+  renderBookings();
+
+  renderReports();
+
+}
+
+
+/* MODALS */
+
+function openModal(id){
+
+  $(id).style.display =
+    "flex";
+
+}
+
+
+function closeModal(id){
+
+  $(id).style.display =
+    "none";
+
+}
+
+
+/* REFRESH */
+
+function refreshData(){
+
+  loadData();
+
+  renderAll();
+
+  alert(
+    "Data refreshed."
+  );
+
+}
+
+
+/* AUTO LOGIN */
+
+window.addEventListener(
+  "load",
+  function(){
+
+    if(
+      localStorage.getItem(
+        KEY.session
+      ) === "1"
+    ){
+
+      startAdmin();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
